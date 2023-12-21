@@ -1,5 +1,5 @@
-import sys
-import requests
+from sys import exit, argv
+from requests import get
 
 def print_meanings():
     headers = {
@@ -13,11 +13,10 @@ def print_meanings():
         "Sec-Fetch-Site": "same-origin",
     }
 
-    response = requests.get(url, params=params, headers=headers)
+    response = get(url, params=params, headers=headers)
 
     data = response.json()
 
-    # Anlamları çıkart ve yazdır
     if isinstance(data, list) and data:
         first_element = data[0]
         if "anlamlarListe" in first_element:
@@ -37,11 +36,11 @@ def print_meanings():
 
 url = "https://sozluk.gov.tr/gts"
 
-if len(sys.argv) >= 2:
-    search_word = sys.argv[1]
+if len(argv) >= 2:
+    search_word = argv[1]
     params = {"ara": search_word}
     print_meanings()
-    sys.exit(1)
+    exit(1)
 else:
     while True:
         search_word = input("\nworld? ")
